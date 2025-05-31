@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+<div class="admin-panel">
+  <h1>Регистрации на {{ event.name }}</h1>
+  <hr class="title-divider" />
+
+  {% for reg in registrations %}
+  <div class="event-card">
+    <p>
+      <strong>Пользователь:</strong> {{ reg.user.first_name }}
+      {{reg.user.last_name}}
+    </p>
+    <p><strong>Дата регистрации:</strong> {{ reg.registration_date }}</p>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="registration_id" value="{{ reg.id }}" />
+      <button type="submit" class="btn-cancel">Удалить регистрацию</button>
+    </form>
+  </div>
+  {% empty %}
+  <p>Нет зарегистрированных пользователей.</p>
+  {% endfor %}
+</div>
+{% endblock %}

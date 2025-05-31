@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% block content %} {% load l10n %}
+
+<div class="profile-info">
+  <h1>Личный кабинет</h1>
+  <hr class="title-divider" />
+
+  <div class="profile-card">
+    {% if show_form %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.first_name.id_for_label }}">Имя</label>
+        {{ form.first_name }}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.last_name.id_for_label }}">Фамилия</label>
+        {{ form.last_name }}
+      </div>
+      <button type="submit" class="btn-register">Сохранить</button>
+    </form>
+    {% else %}
+    <div class="profile-details-box">
+      <p><strong>Имя:</strong> {{ first_name }}</p>
+      <p><strong>Фамилия:</strong> {{ last_name }}</p>
+    </div>
+    <a href="?edit=1" class="btn-register">Изменить</a>
+    {% endif %}
+  </div>
+
+  <h2>Зарегистрированные мероприятия</h2>
+  <hr class="title-divider" />
+
+  {% if registered_events %}
+  <div class="event-cards-container-horizontal">
+    {% for event in registered_events %}
+    <div class="event-card-horizontal">
+      <h3>{{ event.name }}</h3>
+      <p>
+        {% localize on %} {{ event.event_date|date:"j F Y" }} {% endlocalize %}
+      </p>
+      <p>{{ event.description|truncatewords:20 }}</p>
+      <form
+        method="post"
+        class="reg-cancel-form"
+        action="{% url 'cancel_registration' event.id %}"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn-cancel">Отменить регистрацию</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>Вы ещё не зарегистрированы ни на одно мероприятие.</p>
+  <a href="{% url 'events_list' %}" class="btn-register">
+    Посмотреть список мероприятий
+  </a>
+  {% endif %}
+</div>
+{% endblock %}

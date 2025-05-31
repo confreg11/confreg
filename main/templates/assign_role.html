@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %}
+<h2>Назначить роль пользователю</h2>
+<form method="post">
+  {% csrf_token %}
+  <label for="username">Имя пользователя:</label>
+  <input type="text" id="username" name="username" required />
+
+  <label for="role">Роль:</label>
+  <select id="role" name="role" required>
+    <option value="user">User</option>
+    <option value="manager">Manager</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <button type="submit" class="btn-register">Назначить</button>
+</form>
+<button class="btn-register">
+  <a href="{% url 'admin_panel' %}">Назад в админ-панель</a>
+</button>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}confreg.ru{% endblock %}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href={% static 'css/base.css' %}>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <div class="site-name">
+          <a
+            href="{% url 'main' %}"
+            style="color: inherit; text-decoration: none"
+          >
+            confreg.ru
+          </a>
+        </div>
+        <div class="header-buttons">
+          {% if user.is_authenticated %}
+          <span class="username-display">
+            Добро пожаловать, {{ request.user.username }}
+          </span>
+
+          {% if user.userprofile.role == 'admin' %}
+          <a href="{% url 'admin_panel' %}" class="login-button"
+            >Админ-панель</a
+          >
+          {% elif user.userprofile.role == 'manager' %}
+          <a href="{% url 'manager_event_list' %}" class="login-button"
+            >Список регистраций</a
+          >
+          {% endif %}
+
+          <form
+            action="{% url 'logout' %}"
+            method="post"
+            class="logout-form"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button type="submit" class="login-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="#ffffff"
+              >
+                <path
+                  d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"
+                />
+              </svg>
+              Выйти
+            </button>
+          </form>
+          {% else %}
+          <button class="login-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="white"
+            >
+              <path
+                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 22c-3.123 0-5.914-1.441-7.749-3.69.259-.588.783-.995 1.867-1.246 2.244-.518 4.459-.981 3.393-2.945-3.155-5.82-.899-9.119 2.489-9.119 3.322 0 5.634 3.177 2.489 9.119-1.035 1.952 1.1 2.416 3.393 2.945 1.082.25 1.61.655 1.871 1.241-1.836 2.253-4.628 3.695-7.753 3.695z"
+              />
+            </svg>
+            <a href="{% url 'login' %}" class="login-button">Войти</a>
+          </button>
+
+          <a href="{% url 'register' %}" class="login-button"
+            >Создать аккаунт</a
+          >
+          {% endif %}
+
+          <div class="burger-menu" onclick="openMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <nav id="sideMenu">
+      <button class="close-menu" onclick="closeMenu()">&times;</button>
+      <ul>
+        <li><a href="{% url 'main' %}">главная</a></li>
+        <li><a href="{% url 'events_list' %}">список конференций</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'profile' %}">личный кабинет пользователя</a></li>
+        {% endif %}
+        <li><a href="{% url 'about' %}">о нас</a></li>
+        <li><a href="{% url 'faq' %}">FAQ</a></li>
+        <li><a href="{% url 'contacts' %}">контакты</a></li>
+        <li><a href="{% url 'feedback' %}">форма обратной связи</a></li>
+        <li><a href="{% url 'gallery' %}">галерея</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      {% block content %}{% endblock %}{% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </main>
+
+    <footer>
+      <div class="container">&copy; 2025 confreg.ru</div>
+    </footer>
+
+    <script>
+      function openMenu() {
+        document.getElementById("sideMenu").classList.add("active");
+        document.getElementById("overlay").style.display = "block";
+      }
+
+      function closeMenu() {
+        document.getElementById("sideMenu").classList.remove("active");
+        document.getElementById("overlay").style.display = "none";
+      }
+
+      document.querySelectorAll(".faq-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          card.classList.toggle("open");
+        });
+      });
+    </script>
+  </body>
+</html>

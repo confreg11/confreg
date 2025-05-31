@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block content %}
+<h2>Создать новое мероприятие</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn-register">Создать</button>
+</form>
+<button class="btn-register">
+  <a href="{% url 'admin_panel' %}">Назад в админ-панель</a>
+</button>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% load static %} {% block title %}Список конференций
+— confreg.ru{% endblock %} {% block content %}
+<section class="events-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Список конференций</h1>
+      <hr class="section-divider" />
+    </div>
+
+    <div class="events-grid">
+      {% for event in events %}
+      <div class="event-card">
+        <img src="{% static event.photo_url %}" alt="{{ event.name }}" />
+        <div class="event-content">
+          <h3>{{ event.name }}</h3>
+          <p class="event-date">{{ event.event_date|date:"j E Y" }}</p>
+          <p class="event-description">{{ event.description }}</p>
+          <a href="{% url 'event_detail' event.id %}" class="event-button"
+            >Подробнее</a
+          >
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

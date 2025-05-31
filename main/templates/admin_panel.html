@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block content %}
+<div class="admin-panel">
+  <h1>Админ Панель</h1>
+  <hr class="title-divider" />
+
+  <div class="admin-section">
+    <h2>Создать новое мероприятие</h2>
+    <form
+      method="post"
+      action="{% url 'admin_panel' %}"
+      enctype="multipart/form-data"
+      class="admin-form"
+    >
+      <input type="hidden" name="create_event" value="1" />
+      {% csrf_token %} {{ event_form.as_p }}
+      <button type="submit" class="btn-register"><a href="{% url "create_event" %}">Создать мероприятие </a></button>
+    </form>
+  </div>
+
+  <div class="events-grid">
+    {% for event in events %}
+    <div class="event-card">
+      <h3>{{ event.name }}</h3>
+      <p>{{ event.event_date|date:"j F Y" }}</p>
+      <p>{{ event.description|truncatewords:20 }}</p>
+      <a href="{% url 'edit_event' event.id %}" class="btn-edit"
+        >Редактировать</a
+      >
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="admin-section">
+    <h2>Назначить роль пользователю</h2>
+    <form class="admin-form" method="post" action="{% url 'admin_panel' %}">
+      <input type="hidden" name="assign_role" value="1" />
+      {% csrf_token %} {{ role_form.as_p }}
+      <button type="submit" class="btn-register">
+        <a href="{% url "assign_role" %}">Назначить роль</a>
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

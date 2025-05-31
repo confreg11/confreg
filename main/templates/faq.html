@@ -1,0 +1,116 @@
+{% extends "base.html" %} {% load static %} {% block title %}FAQ —
+confreg.ru{%endblock%} {% block content %}
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Часто задаваемые вопросы</h1>
+      <hr class="section-divider" />
+    </div>
+
+    <div class="faq-list">
+      <ol>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Как зарегистрироваться на конференцию?
+            </p>
+            <p class="faq-answer">
+              Чтобы зарегистрироваться, выберите интересующую конференцию и
+              заполните форму регистрации.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Можно ли изменить данные после регистрации?
+            </p>
+            <p class="faq-answer">
+              Да, вы можете изменить свои данные в личном кабинете до окончания
+              регистрации.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Сколько времени обрабатывается форма?
+            </p>
+            <p class="faq-answer">
+              Обработка заявки занимает до 3 рабочих дней.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Кто может зарегистрироватся на конференции?
+            </p>
+            <p class="faq-answer">
+              Любое заинтересованное лицо, соответствующее требованиям
+              конкретной конференции.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Как узнать, что моя регистрация одобрена?
+            </p>
+            <p class="faq-answer">
+              Вы можете видеть статус вашей заявки в Вашем личном кабинете.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Что делать, если заявка долго не обрабатывается?
+            </p>
+            <p class="faq-answer">
+              Если заявка не получает ответа более 3 рабочих дней, вы можете
+              связаться по форме обратной связи.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Кто рассматривает заявки?
+            </p>
+            <p class="faq-answer">Заявки рассматриваются нашими менеджерами.</p>
+          </div>
+        </li>
+        <li>
+          <div class="faq-card">
+            <p class="faq-question" onclick="toggleAnswer(this)">
+              Можно ли отменить регистрацию?
+            </p>
+            <p class="faq-answer">
+              Да, Вы можете отменить свою регистрацию в Вашем личном кабинете.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  function toggleAnswer(questionElem) {
+    const answer = questionElem.nextElementSibling;
+    if (answer.style.display === "block") {
+      answer.style.display = "none";
+    } else {
+      answer.style.display = "block";
+    }
+  }
+
+  // Optionally, hide all answers by default on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    document
+      .querySelectorAll(".faq-answer")
+      .forEach((ans) => (ans.style.display = "none"));
+  });
+</script>
+{% endblock %}

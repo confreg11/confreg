@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% load static %} {% block title %}Контакты —
+confreg.ru{% endblock %} {% block content %}
+<section class="contacts-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Контакты</h1>
+      <hr class="section-divider" />
+    </div>
+
+    <div class="contact-info">
+      <p><strong>Телефон:</strong> +7 (495) 123-45-67</p>
+      <p>
+        <strong>Email:</strong>
+        <a href="mailto:support@confreg.ru">support@confreg.ru</a>
+      </p>
+    </div>
+
+    <div class="map-wrapper">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.3116099962373!2d37.61842351606132!3d55.75124498055388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x414ab7c0c8e4aebb%3A0x8b44b99c45a6371a!2z0JrQsNGA0LDRgNC40YHQvtCy0LXRgNC-0LDRjyDRgtC40YHRjCDQk9GA0LjRgtC10L3RgdGC0YDQtdCy0LjRjw!5e0!3m2!1sru!2sru!4v1695849367521!5m2!1sru!2sru"
+        width="100%"
+        height="400"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Google Maps — Москва"
+      >
+      </iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

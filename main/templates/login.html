@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<div class="form-container">
+  <h2>Вход</h2>
+  <form method="post" class="registration-form">
+    {% csrf_token %}
+
+    <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+    {{ form.username }} {% if form.username.errors %}
+    <div class="error">{{ form.username.errors }}</div>
+    {% endif %}
+
+    <label for="{{ form.password.id_for_label }}">Пароль</label>
+    {{ form.password }} {% if form.password.errors %}
+    <div class="error">{{ form.password.errors }}</div>
+    {% endif %}
+
+    <button type="submit">Войти</button>
+  </form>
+
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
