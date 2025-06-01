@@ -17,5 +17,30 @@
     </div>
     {% endfor %}
   </div>
+
+  <div class="manager-feedback-section">
+  <h2>Ожидающие формы обратной связи</h2>
+  <hr class="title-divider" />
+
+  {% for feedback in pending_feedback %}
+  <div class="feedback-card">
+    <p><strong>Имя:</strong> {{ feedback.name }}</p>
+    <p><strong>Телефон:</strong> {{ feedback.phone }}</p>
+    <p><strong>Описание:</strong> {{ feedback.description }}</p>
+    <p><strong>Статус:</strong> {{ feedback.status }}</p>
+    <form method="post" action="{% url 'update_feedback_status' feedback.id %}">
+      {% csrf_token %}
+      <select name="status">
+        <option value="в ожидании" {% if feedback.status == "в ожидании" %}selected{% endif %}>в ожидании</option>
+        <option value="рассмотрено" {% if feedback.status == "рассмотрено" %}selected{% endif %}>рассмотрено</option>
+      </select>
+      <button type="submit" class="btn-register">Обновить статус</button>
+    </form>
+  </div>
+  {% empty %}
+  <p>Нет новых форм обратной связи.</p>
+  {% endfor %}
+</div>
+
 </div>
 {% endblock %}

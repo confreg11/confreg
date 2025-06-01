@@ -1331,3 +1331,22 @@ textarea {
   clear: both;
 }
 
+.manager-feedback-section {
+  padding: 0px;
+}
+
+.feedback-card {
+  background-color: #fff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(255, 111, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+.feedback-card form {
+  margin-top: 0.5em;
+}
+
+.feedback-section h2 {
+  margin-top: 2em;
+}

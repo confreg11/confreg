@@ -51,4 +51,9 @@ urlpatterns = [
         views.view_event_registrations,
         name="view_event_registrations",
     ),
+    path(
+        "update-feedback-status/<int:feedback_id>/",
+        views.update_feedback_status,
+        name="update_feedback_status",
+    ),
 ]

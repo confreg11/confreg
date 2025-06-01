@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
 from django.db import connection
-from .models import Event, UserProfile, Registration
+from .models import Event, UserProfile, Registration, Feedback
 from .forms import (
     UserRegistrationForm,
     UserLoginForm,
@@ -285,7 +286,16 @@ def manager_event_list(request):
         return redirect("profile")
 
     events = Event.objects.all()
-    return render(request, "manager_event_list.html", {"events": events})
+    pending_feedback = Feedback.objects.filter(status="в ожидании")
+
+    return render(
+        request,
+        "manager_event_list.html",
+        {
+            "events": events,
+            "pending_feedback": pending_feedback,
+        },
+    )
 
 
 @login_required
@@ -307,3 +317,22 @@ def view_event_registrations(request, event_id):
         "event_registrations.html",
         {"event": event, "registrations": registrations},
     )
+
+
+@require_POST
+@login_required
+def update_feedback_status(request, feedback_id):
+    if request.user.userprofile.role != "manager":
+        return redirect("profile")
+
+    feedback = get_object_or_404(Feedback, pk=feedback_id)
+    new_status = request.POST.get("status")
+
+    if new_status in ["в ожидании", "рассмотрено"]:
+        feedback.status = new_status
+        feedback.save()
+        messages.success(request, "Статус обновлен успешно.")
+    else:
+        messages.error(request, "Недопустимый статус.")
+
+    return redirect("manager_event_list")
