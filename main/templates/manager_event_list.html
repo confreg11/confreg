@@ -27,6 +27,7 @@
     <p><strong>Имя:</strong> {{ feedback.name }}</p>
     <p><strong>Телефон:</strong> {{ feedback.phone }}</p>
     <p><strong>Описание:</strong> {{ feedback.description }}</p>
+    <p><strong>Дата отправки:</strong> {{ feedback.created_at|date:"j F H:i" }}</p>
     <p><strong>Статус:</strong> {{ feedback.status }}</p>
     <form method="post" action="{% url 'update_feedback_status' feedback.id %}">
       {% csrf_token %}
