@@ -153,7 +153,7 @@ def profile_view(request):
     return render(request, "profile.html", context)
 
 
-@login_required
+@login_required(login_url="/register/")
 def event_register(request, event_id):
     event = get_object_or_404(Event, id=event_id)
 
