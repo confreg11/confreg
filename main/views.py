@@ -89,13 +89,12 @@ def register(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data["password1"])
             user.save()
+            login(request, user)
 
-            UserProfile.objects.create(user=user)
+            # UserProfile.objects.create(user=user)
 
-            messages.success(
-                request, "Регистрация прошла успешно. Теперь вы можете войти."
-            )
-            return redirect("login")
+            messages.success(request, "Регистрация прошла успешно. Добро пожаловать.")
+            return redirect("events_list")
         else:
             messages.error(request, "Пожалуйста, исправьте ошибки в форме.")
     else:

@@ -156,6 +156,15 @@ footer {
   font-size: 0.9rem;
 }
 
+.footer-link {
+  all: unset;
+}
+
+.footer-link:hover {
+  all:unset;
+  cursor: pointer;
+}
+
 .main-content {
   max-width: 1280px;
   margin: 0 auto;
