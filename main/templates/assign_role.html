@@ -1,4 +1,11 @@
 {% extends "base.html" %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li><a href="{% url 'admin_panel' %}">Админ-панель</a></li>
+    <li>Назначить роль</li>
+  </ul>
+</nav>
 <h2>Назначить роль пользователю</h2>
 <form method="post">
   {% csrf_token %}

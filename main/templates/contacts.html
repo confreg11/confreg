@@ -1,5 +1,10 @@
-{% extends "base.html" %} {% load static %} {% block title %}Контакты —
-confreg.ru{% endblock %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}Контакты — confreg.ru{% endblock %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Контакты</li>
+  </ul>
+</nav>
 <section class="contacts-section">
   <div class="container">
     <div class="section-header">

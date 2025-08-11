@@ -1,5 +1,10 @@
-{% extends "base.html" %} {% load static %} {% block title %}Галерея —
-confreg.ru{% endblock %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}Галерея — confreg.ru{% endblock %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Галерея</li>
+  </ul>
+</nav>
 <section class="gallery-section">
   <div class="container">
     <div class="section-header">

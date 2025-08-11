@@ -1,4 +1,11 @@
 {% extends "base.html" %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li><a href="{% url 'manager_event_list' %}">Менеджмент панель</a></li>
+    <li>Регистрации: {{ event.name }}</li>
+  </ul>
+</nav>
 <div class="admin-panel">
   <h1>Регистрации на {{ event.name }}</h1>
   <hr class="title-divider" />

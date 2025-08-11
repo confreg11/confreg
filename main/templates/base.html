@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href={% static 'css/base.css' %}>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
   <body>
     <header>
@@ -33,7 +33,7 @@
             >Админ-панель</a
           >
           {% elif user.userprofile.role == 'manager' %}
-          <a href="{% url 'manager_event_list' %}" class="login-button"
+          <a href="{% url 'manager_panel' %}" class="login-button"
             >Менеджмент панель</a
           >
           {% endif %}
@@ -90,24 +90,6 @@
       </div>
     </header>
 
-    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-    <nav id="sideMenu">
-      <button class="close-menu" onclick="closeMenu()">&times;</button>
-      <ul>
-        <li><a href="{% url 'main' %}">главная</a></li>
-        <li><a href="{% url 'events_list' %}">список конференций</a></li>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'profile' %}">личный кабинет пользователя</a></li>
-        {% endif %}
-        <li><a href="{% url 'about' %}">о нас</a></li>
-        <li><a href="{% url 'faq' %}">FAQ</a></li>
-        <li><a href="{% url 'contacts' %}">контакты</a></li>
-        <li><a href="{% url 'feedback' %}">форма обратной связи</a></li>
-        <li><a href="{% url 'gallery' %}">галерея</a></li>
-      </ul>
-    </nav>
-
     <main class="container">
       {% block content %}{% endblock %}{% if messages %}
       <div class="messages">
@@ -120,12 +102,32 @@
 
     <footer>
       <div class="container">
-        &copy;
+        <p>Петика Любовь Эрнестовна &copy;
         <a class="footer-link" href="https://www.muiv.ru/"
           >Московский Университет имени С.Ю.Витте 2025</a
-        >
+        ></p>
       </div>
     </footer>
+
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <nav id="sideMenu">
+      <button class="close-menu" onclick="closeMenu()">&times;</button>
+      <ul>
+        <li><a href="{% url 'main' %}">главная</a></li>
+        <li><a href="{% url 'events_list' %}">список конференций</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'profile' %}">личный кабинет пользователя</a></li>
+        {% endif %}
+        <li><a href="{% url 'about' %}">о нас</a></li>
+        <li><a href="{% url 'mission' %}">наша миссия</a></li>
+        <li><a href="{% url 'advantages' %}">преимущества</a></li>
+        <li><a href="{% url 'faq' %}">FAQ</a></li>
+        <li><a href="{% url 'contacts' %}">контакты</a></li>
+        <li><a href="{% url 'feedback' %}">форма обратной связи</a></li>
+        <li><a href="{% url 'gallery' %}">галерея</a></li>
+      </ul>
+    </nav>
 
     <script>
       function openMenu() {

@@ -1,4 +1,11 @@
 {% extends "base.html" %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li><a href="{% url 'admin_panel' %}">Админ-панель</a></li>
+    <li>Редактировать мероприятие</li>
+  </ul>
+</nav>
 <h1>Редактировать мероприятие: {{ event.name }}</h1>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %} {{ form.as_p }}

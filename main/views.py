@@ -15,6 +15,7 @@ from django.utils import translation
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -40,6 +41,81 @@ def gallery(request):
     return render(request, "gallery.html")
 
 
+def mission(request):
+    return render(request, "mission.html")
+
+
+def advantages(request):
+    return render(request, "advantages.html")
+
+
+def rules(request):
+    return render(request, "rules.html")
+
+
+def admin_playbook(request):
+    return render(request, "admin_playbook.html")
+
+
+def manager_panel(request):
+    return render(request, "manager_panel.html")
+
+
+def manager_feedback_instructions(request):
+    return render(request, "manager_feedback_instructions.html")
+
+
+def manager_registration_instructions(request):
+    return render(request, "manager_registration_instructions.html")
+
+
+def manager_manual(request):
+    return render(request, "manager_manual.html")
+
+
+def profile_user_guide(request):
+    return render(request, "profile_user_guide.html")
+
+
+def profile_checklist(request):
+    return render(request, "profile_checklist.html")
+
+
+def event_participation_policy(request):
+    return render(request, "event_participation_policy.html")
+
+
+@login_required
+def profile_registered_events(request):
+    translation.activate("ru")
+    user = request.user
+
+    registrations = Registration.objects.filter(user=user).select_related("event")
+    registered_events = [reg.event for reg in registrations]
+
+    context = {
+        "registered_events": registered_events,
+    }
+    return render(request, "profile_registered_events.html", context)
+
+
+@login_required
+def manager_pending_feedback(request):
+    translation.activate("ru")
+    if request.user.userprofile.role != "manager":
+        return redirect("profile")
+
+    pending_feedback = Feedback.objects.filter(status="в ожидании")
+
+    return render(
+        request,
+        "manager_pending_feedback.html",
+        {
+            "pending_feedback": pending_feedback,
+        },
+    )
+
+
 @csrf_protect
 def feedback_view(request):
     success = False
@@ -58,6 +134,18 @@ def feedback_view(request):
                 """,
                     [name, phone, description],
                 )
+                cursor.execute("SELECT LAST_INSERT_ID()")
+                feedback_id = cursor.fetchone()[0]
+
+            for uploaded_file in request.FILES.getlist("files"):
+                from .models import FeedbackAttachment, Feedback as FeedbackModel
+
+                feedback_obj = FeedbackModel.objects.get(pk=feedback_id)
+                FeedbackAttachment.objects.create(
+                    feedback=feedback_obj,
+                    file=uploaded_file,
+                )
+
             success = True
 
     return render(request, "feedback.html", {"success": success})
@@ -90,8 +178,6 @@ def register(request):
             user.set_password(form.cleaned_data["password1"])
             user.save()
             login(request, user)
-
-            # UserProfile.objects.create(user=user)
 
             messages.success(request, "Регистрация прошла успешно. Добро пожаловать.")
             return redirect("events_list")
@@ -158,16 +244,7 @@ def event_register(request, event_id):
     event = get_object_or_404(Event, id=event_id)
 
     if request.method == "POST":
-        first_name = request.POST.get("first_name").strip()
-        last_name = request.POST.get("last_name").strip()
-
         user = request.user
-        if first_name and first_name != user.first_name:
-            user.first_name = first_name
-        if last_name and last_name != user.last_name:
-            user.last_name = last_name
-        user.save()
-
         registration, created = Registration.objects.get_or_create(
             user=user, event=event
         )
@@ -202,17 +279,17 @@ def admin_panel(request):
     if request.user.userprofile.role != "admin":
         return redirect("profile")
 
-    events = Event.objects.all()
-    users = UserProfile.objects.exclude(user=request.user)
+    return render(request, "admin_panel.html")
 
-    return render(
-        request,
-        "admin_panel.html",
-        {
-            "events": events,
-            "users": users,
-        },
-    )
+
+@login_required
+def admin_events_list(request):
+    translation.activate("ru")
+    if request.user.userprofile.role != "admin":
+        return redirect("profile")
+
+    events = Event.objects.all().order_by("event_date")
+    return render(request, "admin_events_list.html", {"events": events})
 
 
 @login_required
@@ -335,3 +412,42 @@ def update_feedback_status(request, feedback_id):
         messages.error(request, "Недопустимый статус.")
 
     return redirect("manager_event_list")
+
+
+@login_required
+def export_events_excel(request):
+    if request.user.userprofile.role != "admin":
+        return redirect("profile")
+
+    import openpyxl
+    from openpyxl.utils import get_column_letter
+
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.title = "Мероприятия"
+
+    headers = ["Название", "Дата", "Кол-во регистраций"]
+    sheet.append(headers)
+
+    events = Event.objects.all().order_by("event_date")
+    for event in events:
+        registrations_count = Registration.objects.filter(event=event).count()
+        sheet.append(
+            [event.name, event.event_date.strftime("%d.%m.%Y"), registrations_count]
+        )
+
+    for column_cells in sheet.columns:
+        length = max(
+            len(str(cell.value)) if cell.value is not None else 0
+            for cell in column_cells
+        )
+        sheet.column_dimensions[get_column_letter(column_cells[0].column)].width = max(
+            12, length + 2
+        )
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    response["Content-Disposition"] = 'attachment; filename="events.xlsx"'
+    workbook.save(response)
+    return response

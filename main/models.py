@@ -68,3 +68,12 @@ class Feedback(models.Model):
 
     class Meta:
         db_table = "feedback"
+
+
+class FeedbackAttachment(models.Model):
+    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, related_name="attachments")
+    file = models.FileField(upload_to="feedback_attachments/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"Attachment #{self.id} for feedback {self.feedback_id}"

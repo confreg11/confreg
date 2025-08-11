@@ -18,6 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -37,14 +39,32 @@ urlpatterns = [
     path("logout/", views.user_logout, name="logout"),
     path("profile/", views.profile_view, name="profile"),
     path(
+        "profile_registered_events.html",
+        views.profile_registered_events,
+        name="profile_registered_events",
+    ),
+    path("profile_user_guide/", views.profile_user_guide, name="profile_user_guide"),
+    path("profile_checklist/", views.profile_checklist, name="profile_checklist"),
+    path(
+        "event_participation_policy/",
+        views.event_participation_policy,
+        name="event_participation_policy",
+    ),
+    path(
         "registrations/cancel/<int:event_id>/",
         views.cancel_registration,
         name="cancel_registration",
     ),
     path("admin-panel/", views.admin_panel, name="admin_panel"),
+    path("admin-panel/events/", views.admin_events_list, name="admin_events_list"),
     path("admin-panel/create-event/", views.create_event, name="create_event"),
     path("admin-panel/assign-role/", views.assign_role, name="assign_role"),
     path("admin-panel/edit-event/<int:event_id>/", views.edit_event, name="edit_event"),
+    path(
+        "admin-panel/export-events/",
+        views.export_events_excel,
+        name="export_events_excel",
+    ),
     path("manager/registrations/", views.manager_event_list, name="manager_event_list"),
     path(
         "manager/registrations/<int:event_id>/",
@@ -56,4 +76,28 @@ urlpatterns = [
         views.update_feedback_status,
         name="update_feedback_status",
     ),
+    path("mission/", views.mission, name="mission"),
+    path("advantages/", views.advantages, name="advantages"),
+    path("rules/", views.rules, name="rules"),
+    path("admin_playbook/", views.admin_playbook, name="admin_playbook"),
+    path("manager_panel/", views.manager_panel, name="manager_panel"),
+    path(
+        "manager_feedback_instructions/",
+        views.manager_feedback_instructions,
+        name="manager_feedback_instructions",
+    ),
+    path(
+        "manager_registration_instructions/",
+        views.manager_registration_instructions,
+        name="manager_registration_instructions",
+    ),
+    path("manager_manual/", views.manager_manual, name="manager_manual"),
+    path(
+        "manager_pending_feedback/",
+        views.manager_pending_feedback,
+        name="manager_pending_feedback",
+    ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

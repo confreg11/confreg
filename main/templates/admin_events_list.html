@@ -3,24 +3,24 @@
 <nav class="breadcrumb-nav">
   <ul class="breadcrumb">
     <li><a href="{% url 'main' %}">Главная</a></li>
-    <li><a href="{% url 'manager_panel' %}">Менеджмент панель</a></li>
+    <li><a href="{% url 'admin_panel' %}">Админ-панель</a></li>
     <li>Список мероприятий</li>
   </ul>
 </nav>
-<div class="admin-panel">
+<div class="admin-panel admin-events">
   <h1>Список мероприятий</h1>
   <hr class="title-divider" />
 
-  <div class="events-grid">
+  <div class="admin-events-grid">
     {% for event in events %}
-    <div class="event-card">
+    <div class="admin-event-card">
       <h3>{{ event.name }}</h3>
       <p>{{ event.event_date|date:"j F Y" }}</p>
       <p>{{ event.description|truncatewords:20 }}</p>
-      <a href="{% url 'view_event_registrations' event.id %}" class="btn-register">Просмотр регистраций</a>
+      <a href="{% url 'edit_event' event.id %}" class="btn-edit">Редактировать</a>
     </div>
     {% empty %}
-    <p>События не найдены.</p>
+    <p>Пока нет мероприятий.</p>
     {% endfor %}
   </div>
 </div>

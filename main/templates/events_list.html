@@ -1,5 +1,10 @@
-{% extends "base.html" %} {% load static %} {% block title %}Список конференций
-— confreg.ru{% endblock %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}Список конференций — confreg.ru{% endblock %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Список конференций</li>
+  </ul>
+</nav>
 <section class="events-section">
   <div class="container">
     <div class="section-header">

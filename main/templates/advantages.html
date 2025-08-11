@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Преимущества — confreg.ru{% endblock %}
+{% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Преимущества</li>
+  </ul>
+</nav>
+<section class="about-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Преимущества</h1>
+      <hr class="section-divider" />
+    </div>
+    <div class="advantages-grid">
+      <div class="about-card">
+        <h2>Мы предлагаем:</h2>
+        <ul class="about-list">
+          <li>Удобную платформу для мониторинга конференций</li>
+          <li>Актуальную информацию о научных конференциях</li>
+          <li>Персональный кабинет для каждого пользователя</li>
+          <li>Поддержку пользователей</li>
+        </ul>
+      </div>
+      <div class="about-card">
+        <h2>Почему мы?</h2>
+        <ul class="about-list">
+          <li>Современный и интуитивно понятный интерфейс</li>
+          <li>Быстрая регистрация и подтверждение участия</li>
+          <li>Высокий уровень безопасности и защиты данных</li>
+          <li>Постоянное развитие и внедрение новых функций</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,4 +1,10 @@
 {% extends "base.html" %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Вход</li>
+  </ul>
+</nav>
 <div class="form-container">
   <h2>Вход</h2>
   <form method="post" class="registration-form">

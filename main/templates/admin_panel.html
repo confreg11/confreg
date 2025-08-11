@@ -1,44 +1,31 @@
 {% extends "base.html" %} {% block content %}
-<div class="admin-panel">
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Админ-панель</li>
+  </ul>
+</nav>
+<div class="admin-panel admin-hub">
   <h1>Админ Панель</h1>
   <hr class="title-divider" />
 
-  <div class="admin-section">
-    <h2>Создать новое мероприятие</h2>
-    <form
-      method="post"
-      action="{% url 'admin_panel' %}"
-      enctype="multipart/form-data"
-      class="admin-form"
-    >
-      <input type="hidden" name="create_event" value="1" />
-      {% csrf_token %} {{ event_form.as_p }}
-      <button type="submit" class="btn-register"><a href="{% url "create_event" %}">Создать мероприятие </a></button>
-    </form>
+  <div class="admin-card" style="margin-bottom: 16px;">
+    <h3>Мероприятия</h3>
+    <a href="{% url 'create_event' %}" class="btn-register">Создать новое мероприятие</a>
+    <a href="{% url 'admin_events_list' %}" class="btn-register">Список мероприятий</a>
+    <a href="{% url 'export_events_excel' %}" class="btn-register">Скачать список мероприятий</a>
   </div>
 
-  <div class="events-grid">
-    {% for event in events %}
-    <div class="event-card">
-      <h3>{{ event.name }}</h3>
-      <p>{{ event.event_date|date:"j F Y" }}</p>
-      <p>{{ event.description|truncatewords:20 }}</p>
-      <a href="{% url 'edit_event' event.id %}" class="btn-edit"
-        >Редактировать</a
-      >
-    </div>
-    {% endfor %}
+  <div class="admin-card" style="margin-bottom: 16px;">
+    <h3>Пользователи</h3>
+    <a href="{% url 'assign_role' %}" class="btn-register">Управление ролями пользователей</a>
   </div>
 
-  <div class="admin-section">
-    <h2>Назначить роль пользователю</h2>
-    <form class="admin-form" method="post" action="{% url 'admin_panel' %}">
-      <input type="hidden" name="assign_role" value="1" />
-      {% csrf_token %} {{ role_form.as_p }}
-      <button type="submit" class="btn-register">
-        <a href="{% url "assign_role" %}">Назначить роль</a>
-      </button>
-    </form>
+  <div class="admin-card" style="margin-bottom: 16px;">
+    <h3>Инструкции</h3>
+    <a href="{% url 'rules' %}" class="btn-register">Правила создания мероприятий</a>
+    <a href="{% url 'admin_playbook' %}" class="btn-register">Частые административные сценарии</a>
   </div>
+  
 </div>
 {% endblock %}

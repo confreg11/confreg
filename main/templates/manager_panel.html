@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Менеджмент панель</li>
+  </ul>
+</nav>
+<div class="admin-panel admin-hub">
+  <h1>Менеджмент панель</h1>
+  <hr class="title-divider" />
+
+  <div class="admin-card" style="margin-bottom: 16px;">
+    <h3>Мероприятия</h3>
+    <a href="{% url 'manager_event_list' %}" class="btn-register">Список мероприятий</a>
+  </div>
+
+  <div class="admin-card" style="margin-bottom: 16px;">
+    <h3>Формы обратной связи</h3>
+    <a href="{% url 'manager_pending_feedback' %}" class="btn-register">Ожидающие формы обратной связи</a>
+  </div>
+
+  <div class="admin-card" style="margin-bottom: 16px;">
+    <h3>Инструкции</h3>
+    <a href="{% url 'manager_manual' %}" class="btn-register">Руководство менеджера</a>
+    <a href="{% url 'manager_registration_instructions' %}" class="btn-register">Управление регистрациями на мероприятия</a>
+    <a href="{% url 'manager_feedback_instructions' %}" class="btn-register">Обработка форм обратной связи</a>
+  </div>
+
+</div>
+{% endblock %}

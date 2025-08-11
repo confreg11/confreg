@@ -87,7 +87,7 @@ header {
   display: none;
   z-index: 1000;
 }
-nav {
+#sideMenu {
   position: fixed;
   top: 0;
   right: -300px;
@@ -99,20 +99,23 @@ nav {
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   padding-top: 1rem;
 }
-nav.active {
+
+#sideMenu.active {
   right: 0;
 }
-nav ul {
+
+#sideMenu ul {
   list-style: none;
   padding: 0;
   margin: 2rem 0;
 }
-nav li {
+
+#sideMenu li {
   padding: 1.5rem 1.5rem;
   position: relative;
 }
 
-nav li::after {
+#sideMenu li::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -122,12 +125,12 @@ nav li::after {
   background-color: #ff6f00;
 }
 
-nav li a {
+#sideMenu li a {
   text-decoration: none;
   color: #ff6f00;
 }
 
-nav li:last-child {
+#sideMenu li:last-child {
   border-bottom: none;
 }
 
@@ -1358,4 +1361,87 @@ textarea {
 
 .feedback-section h2 {
   margin-top: 2em;
+}
+
+.register-inline-form {
+  background: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: inline;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.breadcrumb-nav {
+  position: static;
+  margin: 18px 0 10px 0;
+  font-size: 0.98rem;
+}
+.breadcrumb {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+.breadcrumb li {
+  color: #888;
+}
+.breadcrumb li:not(:last-child)::after {
+  content: '›';
+  margin: 0 6px;
+  color: #ff6f00;
+}
+.breadcrumb a {
+  color: #ff6f00;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.breadcrumb a:hover {
+  color: #e65c00;
+  text-decoration: underline;
+}
+/* Admin specific layouts */
+.admin-hub .admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.admin-card {
+  background-color: #fff;
+  border: 1px solid #ffd3a6;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(255, 111, 0, 0.08);
+}
+
+.admin-card h3 {
+  margin-top: 0;
+  color: #ff6f00;
+}
+
+.admin-events .admin-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.admin-events .admin-event-card {
+  background-color: #fff;
+  border: 1px solid #eee0d1;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.admin-events .admin-event-card h3 {
+  margin-top: 0;
+  color: #ff6f00;
 }

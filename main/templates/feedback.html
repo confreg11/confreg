@@ -1,5 +1,10 @@
-{% extends "base.html" %} {% load static %} {% block title %}Форма обратной
-связи — confreg.ru{% endblock %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}Форма обратной связи — confreg.ru{% endblock %} {% block content %}
+<nav class="breadcrumb-nav">
+  <ul class="breadcrumb">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li>Форма обратной связи</li>
+  </ul>
+</nav>
 <section class="feedback-section">
   <div class="container">
     <div class="section-header">
@@ -16,7 +21,7 @@
     </p>
     {% endif %}
 
-    <form method="post" novalidate>
+    <form method="post" enctype="multipart/form-data" novalidate>
       {% csrf_token %}
       <div class="form-group">
         <label for="id_name">Имя</label>
@@ -44,6 +49,12 @@
           rows="5"
           required
         ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="id_files">Файлы (необязательно)</label>
+        <input type="file" id="id_files" name="files" multiple />
+        <small style="color:#666;">Вы можете прикрепить несколько файлов (изображения, документы).</small>
       </div>
 
       <button type="submit" class="btn-submit">Отправить</button>
