@@ -23,5 +23,34 @@
     <p>События не найдены.</p>
     {% endfor %}
   </div>
+<<<<<<< HEAD
+=======
+
+  <div class="manager-feedback-section">
+  <h2>Запросы, поступившие через форму обратной связи</h2>
+  <hr class="title-divider" />
+
+  {% for feedback in pending_feedback %}
+  <div class="feedback-card">
+    <p><strong>Имя:</strong> {{ feedback.name }}</p>
+    <p><strong>Телефон:</strong> {{ feedback.phone }}</p>
+    <p><strong>Описание:</strong> {{ feedback.description }}</p>
+    <p><strong>Дата отправки:</strong> {{ feedback.created_at|date:"j F H:i" }}</p>
+    <p><strong>Статус:</strong> {{ feedback.status }}</p>
+    <form method="post" action="{% url 'update_feedback_status' feedback.id %}">
+      {% csrf_token %}
+      <select name="status">
+        <option value="в ожидании" {% if feedback.status == "в ожидании" %}selected{% endif %}>в ожидании</option>
+        <option value="рассмотрено" {% if feedback.status == "рассмотрено" %}selected{% endif %}>рассмотрено</option>
+      </select>
+      <button type="submit" class="btn-register">Обновить статус</button>
+    </form>
+  </div>
+  {% empty %}
+  <p>Нет новых форм обратной связи.</p>
+  {% endfor %}
+</div>
+
+>>>>>>> 4ee44e1f2d2a40f9a5ec11c2f9ea19d9154f80a7
 </div>
 {% endblock %}
